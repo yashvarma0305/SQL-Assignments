@@ -1,0 +1,737 @@
+
+Q1. SELECT clause with WHERE, AND, DISTINCT, Wild Card (LIKE)
+
+a.	Fetch the employee number, first name and last name of those employees who are working as Sales Rep reporting to employee with employeenumber 1102 (Refer employee table)
+ANSWER=
+
+mysql> use classocmodels;
+Database changed
+
+mysql> select employeenumber,firstname,lastname from employees where reportsto = 1102;
++----------------+-----------+-----------+
+| employeenumber | firstname | lastname  |
++----------------+-----------+-----------+
+|           1337 | Loui      | Bondur    |
+|           1370 | Gerard    | Hernandez |
+|           1401 | Pamela    | Castillo  |
+|           1501 | Larry     | Bott      |
+|           1504 | Barry     | Jones     |
+|           1702 | Martin    | Gerard    |
++----------------+-----------+-----------+
+6 rows in set (0.00 sec)
+
+b) Show the unique productline values containing the word cars at the end from the products table
+ANSWER=
+
+mysql>  select distinct productline from products where productline like '%cars';
++--------------+
+| productline  |
++--------------+
+| Classic Cars |
+| Vintage Cars |
++--------------+
+2 rows in set (0.05 sec)
+
+Q2. CASE STATEMENTS for Segmentation
+
+
+a. Using a CASE statement, segment customers into three categories based on their country:(Refer Customers table)
+                        "North America" for customers from USA or Canada
+                        "Europe" for customers from UK, France, or Germany
+                        "Other" for all remaining countries
+     Select the customerNumber, customerName, and the assigned region as "CustomerSegment".
+ANSWER=
+mysql> SELECT customerNumber, customerName, CASE WHEN country IN ('USA', 'Canada') THEN 'North America' WHEN country IN ('UK', 'France', 'Germany') THEN 'Europe' ELSE 'Other' END AS CustomerSegment FROM customers;
++----------------+------------------------------------+-----------------+
+| customerNumber | customerName                       | CustomerSegment |
++----------------+------------------------------------+-----------------+
+|            103 | Atelier graphique                  | Europe          |
+|            112 | Signal Gift Stores                 | North America   |
+|            114 | Australian Collectors, Co.         | Other           |
+|            119 | La Rochelle Gifts                  | Europe          |
+|            121 | Baane Mini Imports                 | Other           |
+|            124 | Mini Gifts Distributors Ltd.       | North America   |
+|            125 | Havel & Zbyszek Co                 | Other           |
+|            128 | Blauer See Auto, Co.               | Europe          |
+|            129 | Mini Wheels Co.                    | North America   |
+|            131 | Land of Toys Inc.                  | North America   |
+|            141 | Euro+ Shopping Channel             | Other           |
+|            144 | Volvo Model Replicas, Co           | Other           |
+|            145 | Danish Wholesale Imports           | Other           |
+|            146 | Saveley & Henriot, Co.             | Europe          |
+|            148 | Dragon Souveniers, Ltd.            | Other           |
+|            151 | Muscle Machine Inc                 | North America   |
+|            157 | Diecast Classics Inc.              | North America   |
+|            161 | Technics Stores Inc.               | North America   |
+|            166 | Handji Gifts& Co                   | Other           |
+|            167 | Herkku Gifts                       | Other           |
+|            168 | American Souvenirs Inc             | North America   |
+|            169 | Porto Imports Co.                  | Other           |
+|            171 | Daedalus Designs Imports           | Europe          |
+|            172 | La Corne D'abondance, Co.          | Europe          |
+|            173 | Cambridge Collectables Co.         | North America   |
+|            175 | Gift Depot Inc.                    | North America   |
+|            177 | Osaka Souveniers Co.               | Other           |
+|            181 | Vitachrome Inc.                    | North America   |
+|            186 | Toys of Finland, Co.               | Other           |
+|            187 | AV Stores, Co.                     | Europe          |
+|            189 | Clover Collections, Co.            | Other           |
+|            198 | Auto-Moto Classics Inc.            | North America   |
+|            201 | UK Collectables, Ltd.              | Europe          |
+|            202 | Canadian Gift Exchange Network     | North America   |
+|            204 | Online Mini Collectables           | North America   |
+|            205 | Toys4GrownUps.com                  | North America   |
+|            206 | Asian Shopping Network, Co         | Other           |
+|            209 | Mini Caravy                        | Europe          |
+|            211 | King Kong Collectables, Co.        | Other           |
+|            216 | Enaco Distributors                 | Other           |
+|            219 | Boards & Toys Co.                  | North America   |
+|            223 | Natürlich Autos                    | Europe          |
+|            227 | Heintze Collectables               | Other           |
+|            233 | Québec Home Shopping Network       | North America   |
+|            237 | ANG Resellers                      | Other           |
+|            239 | Collectable Mini Designs Co.       | North America   |
+|            240 | giftsbymail.co.uk                  | Europe          |
+|            242 | Alpha Cognac                       | Europe          |
+|            247 | Messner Shopping Network           | Europe          |
+|            249 | Amica Models & Co.                 | Other           |
+|            250 | Lyon Souveniers                    | Europe          |
+|            256 | Auto Associés & Cie.               | Europe          |
+|            259 | Toms Spezialitäten, Ltd            | Europe          |
+|            260 | Royal Canadian Collectables, Ltd.  | North America   |
+|            273 | Franken Gifts, Co                  | Europe          |
+|            276 | Anna's Decorations, Ltd            | Other           |
+|            278 | Rovelli Gifts                      | Other           |
+|            282 | Souveniers And Things Co.          | Other           |
+|            286 | Marta's Replicas Co.               | North America   |
+|            293 | BG&E Collectables                  | Other           |
+|            298 | Vida Sport, Ltd                    | Other           |
+|            299 | Norway Gifts By Mail, Co.          | Other           |
+|            303 | Schuyler Imports                   | Other           |
+|            307 | Der Hund Imports                   | Europe          |
+|            311 | Oulu Toy Supplies, Inc.            | Other           |
+|            314 | Petit Auto                         | Other           |
+|            319 | Mini Classics                      | North America   |
+|            320 | Mini Creations Ltd.                | North America   |
+|            321 | Corporate Gift Ideas Co.           | North America   |
+|            323 | Down Under Souveniers, Inc         | Other           |
+|            324 | Stylish Desk Decors, Co.           | Europe          |
+|            328 | Tekni Collectables Inc.            | North America   |
+|            333 | Australian Gift Network, Co        | Other           |
+|            334 | Suominen Souveniers                | Other           |
+|            335 | Cramer Spezialitäten, Ltd          | Europe          |
+|            339 | Classic Gift Ideas, Inc            | North America   |
+|            344 | CAF Imports                        | Other           |
+|            347 | Men 'R' US Retailers, Ltd.         | North America   |
+|            348 | Asian Treasures, Inc.              | Other           |
+|            350 | Marseille Mini Autos               | Europe          |
+|            353 | Reims Collectables                 | Europe          |
+|            356 | SAR Distributors, Co               | Other           |
+|            357 | GiftsForHim.com                    | Other           |
+|            361 | Kommission Auto                    | Europe          |
+|            362 | Gifts4AllAges.com                  | North America   |
+|            363 | Online Diecast Creations Co.       | North America   |
+|            369 | Lisboa Souveniers, Inc             | Other           |
+|            376 | Precious Collectables              | Other           |
+|            379 | Collectables For Less Inc.         | North America   |
+|            381 | Royale Belge                       | Other           |
+|            382 | Salzburg Collectables              | Other           |
+|            385 | Cruz & Sons Co.                    | Other           |
+|            386 | L'ordine Souveniers                | Other           |
+|            398 | Tokyo Collectables, Ltd            | Other           |
+|            406 | Auto Canal+ Petit                  | Europe          |
+|            409 | Stuttgart Collectable Exchange     | Europe          |
+|            412 | Extreme Desk Decorations, Ltd      | Other           |
+|            415 | Bavarian Collectables Imports, Co. | Europe          |
+|            424 | Classic Legends Inc.               | North America   |
+|            443 | Feuer Online Stores, Inc           | Europe          |
+|            447 | Gift Ideas Corp.                   | North America   |
+|            448 | Scandinavian Gift Ideas            | Other           |
+|            450 | The Sharp Gifts Warehouse          | North America   |
+|            452 | Mini Auto Werke                    | Other           |
+|            455 | Super Scale Inc.                   | North America   |
+|            456 | Microscale Inc.                    | North America   |
+|            458 | Corrida Auto Replicas, Ltd         | Other           |
+|            459 | Warburg Exchange                   | Europe          |
+|            462 | FunGiftIdeas.com                   | North America   |
+|            465 | Anton Designs, Ltd.                | Other           |
+|            471 | Australian Collectables, Ltd       | Other           |
+|            473 | Frau da Collezione                 | Other           |
+|            475 | West Coast Collectables Co.        | North America   |
+|            477 | Mit Vergnügen & Co.                | Europe          |
+|            480 | Kremlin Collectables, Co.          | Other           |
+|            481 | Raanan Stores, Inc                 | Other           |
+|            484 | Iberia Gift Imports, Corp.         | Other           |
+|            486 | Motor Mint Distributors Inc.       | North America   |
+|            487 | Signal Collectibles Ltd.           | North America   |
+|            489 | Double Decker Gift Stores, Ltd     | Europe          |
+|            495 | Diecast Collectables               | North America   |
+|            496 | Kelly's Gift Shop                  | Other           |
++----------------+------------------------------------+-----------------+
+122 rows in set (0.00 sec)
+
+Q3. Group By with Aggregation functions and Having clause, Date and Time functions
+
+a.Using the OrderDetails table, identify the top 10 products (by productCode) with the highest total order quantity across all orders.
+ANSWER =
+mysql> SELECT productCode, SUM(quantityOrdered) AS totalQuantity FROM OrderDetails GROUP BY productCode ORDER BY totalQuantity DESC LIMIT 10;
++-------------+---------------+
+| productCode | totalQuantity |
++-------------+---------------+
+| S18_3232    |          1808 |
+| S18_1342    |          1111 |
+| S700_4002   |          1085 |
+| S18_3856    |          1076 |
+| S50_1341    |          1074 |
+| S18_4600    |          1061 |
+| S10_1678    |          1057 |
+| S12_4473    |          1056 |
+| S18_2319    |          1053 |
+| S24_3856    |          1052 |
++-------------+---------------+
+10 rows in set (0.01 sec)
+
+b.Company wants to analyse payment frequency by month. Extract the month name from the payment date to count the total number of payments for each month and include only those months with a payment count exceeding 20. Sort the results by total number of payments in descending order.  (Refer Payments table). 
+Answer=
+mysql> SELECT MONTHNAME(paymentDate) AS monthName, COUNT(*) AS totalPayments FROM Payments GROUP BY monthName HAVING totalPayments > 20 ORDER BY totalPayments DESC;
++-----------+---------------+
+| monthName | totalPayments |
++-----------+---------------+
+| December  |            43 |
+| November  |            42 |
+| March     |            24 |
+| May       |            23 |
+| April     |            22 |
++-----------+---------------+
+5 rows in set (0.00 sec)
+
+Q4. CONSTRAINTS: Primary, key, foreign key, Unique, check, not null, default
+
+Create a new database named and Customers_Orders and add the following tables as per the description
+
+a.Create a table named Customers to store customer information. Include the following columns:
+
+customer_id: This should be an integer set as the PRIMARY KEY and AUTO_INCREMENT.
+first_name: This should be a VARCHAR(50) to store the customer's first name.
+last_name: This should be a VARCHAR(50) to store the customer's last name.
+email: This should be a VARCHAR(255) set as UNIQUE to ensure no duplicate email addresses exist.
+phone_number: This can be a VARCHAR(20) to allow for different phone number formats.
+
+Add a NOT NULL constraint to the first_name and last_name columns to ensure they always have a value.
+
+ANSWER =
+create database Customers_Orders ;
+use Customers_Orders;
+CREATE TABLE Customers (customer_id INT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR (50) NOT NULL, last_name VARCHAR (50) NOT NULL, email VARCHAR (255) UNIQUE, phone_number VARCHAR (20));
+
+b.Create a table named Orders to store information about customer orders. Include the following columns:
+
+    	order_id: This should be an integer set as the PRIMARY KEY and AUTO_INCREMENT.
+customer_id: This should be an integer referencing the customer_id in the Customers table  (FOREIGN KEY).
+order_date: This should be a DATE data type to store the order date.
+total_amount: This should be a DECIMAL(10,2) to store the total order amount.
+     	
+Constraints:
+a)	Set a FOREIGN KEY constraint on customer_id to reference the Customers table.
+b)	Add a CHECK constraint to ensure the total_amount is always a positive value.
+
+ANSWERS=
+CREATE TABLE Orders (order_id INT AUTO_INCREMENT PRIMARY KEY, customer_id INT, order_date DATE, total_amount DECIMAL (10,2), FOREIGN KEY (customer_id) REFERENCES Customers(customer_id), CHECK (total_amount > 0));
+
+Q5. JOINS
+a. List the top 5 countries (by order count) that Classic Models ships to. (Use the Customers and Orders tables)
+ANSWER=
+mysql> select customers.country,
+    -> count(orders.ordernumber) as Order_Count from Customers join Orders on customers.customernumber= orders.customernumber group by customers.country order by order_count DESC limit 5;
++-------------+-------------+
+| country     | Order_Count |
++-------------+-------------+
+| USA         |         112 |
+| France      |          37 |
+| Spain       |          36 |
+| Australia   |          19 |
+| New Zealand |          15 |
++-------------+-------------+
+5 rows in set (0.00 sec)
+
+Q6. SELF JOIN
+
+a.Create a table project with below fields.
+
+
+●	EmployeeID : integer set as the PRIMARY KEY and AUTO_INCREMENT.
+●	FullName: varchar(50) with no null values
+●	Gender : Values should be only ‘Male’  or ‘Female’
+●	ManagerID: integer 
+Add below data into it.
+ 
+Find out the names of employees and their related managers.
+ANSWERS=
+CREATE TABLE Project (EmployeeID INT AUTO_INCREMENT PRIMARY KEY, FullName VARCHAR (50) NOT NULL, Gender ENUM ('Male', 'Female'), ManagerID INT);
+
+insert into project (Employeeid,fullname,gender,managerid) values (1,'Pranaya', 'Male',3);
+
+insert into project (Employeeid,fullname,gender,managerid) values(2,'Priyanka','Female',1), (3,'Preety','Female', null), (4,'Anurag','Male',1), (5,'Sambit','Male',1), (6,'Rajesh','Male',3), (7,'Heena','Female',3);
+
+mysql> SELECT e.FullName AS ManagerName, m.FullName AS EmployeeName FROM Project as e LEFT JOIN Project as m ON m.EmployeeID = e.ManagerID;
++-------------+--------------+
+| ManagerName | EmployeeName |
++-------------+--------------+
+| Pranaya     | Preety       |
+| Priyanka    | Pranaya      |
+| Preety      | NULL         |
+| Anurag      | Pranaya      |
+| Sambit      | Pranaya      |
+| Rajesh      | Preety       |
+| Heena       | Preety       |
++-------------+--------------+
+7 rows in set (0.00 sec)
+
+Q7. DDL Commands: Create, Alter, Rename
+a. Create table facility. Add the below fields into it.
+●	Facility_ID
+●	Name
+●	State
+●	Country
+
+i) Alter the table by adding the primary key and auto increment to Facility_ID column.
+ii) Add a new column city after name with data type as varchar which should not accept any null values.
+
+ANSWER=
+CREATE TABLE Facility (Facility_ID INT, Name VARCHAR (100) NOT NULL, State VARCHAR (50), Country VARCHAR (50));
+
+alter table facility modify column facility_id int Auto_increment primary key;
+
+alter table facility add column city varchar (100) NOT Null after name;
+
+mysql> desc  Facility;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| facility_id | int          | NO   | PRI | NULL    | auto_increment |
+| Name        | varchar(100) | NO   |     | NULL    |                |
+| city        | varchar(100) | NO   |     | NULL    |                |
+| State       | varchar(50)  | YES  |     | NULL    |                |
+| Country     | varchar(50)  | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.07 sec)
+
+Q8. Views in SQL
+
+a. Create a view named product_category_sales that provides insights into sales performance by product category. This view should include the following information:
+productLine: The category name of the product (from the ProductLines table).
+
+total_sales: The total revenue generated by products within that category (calculated by summing the orderDetails.quantity * orderDetails.priceEach for each product in the category).
+
+number_of_orders: The total number of orders containing products from that category.
+
+(Hint: Tables to be used: Products, orders, orderdetails and productlines)
+
+The view when read should show the output as:
+
+Answer=
+CREATE VIEW product_category_sales AS SELECT pl.productLine,
+SUM (od.quantityOrdered * od.priceEach) AS total_sales, COUNT (DISTINCT o.orderNumber) AS number_of_orders 
+FROM ProductLines pl JOIN Products as p ON pl.productLine = p.productLine JOIN OrderDetails as od ON p.productCode = od.productCode JOIN Orders as o ON od.orderNumber = o.orderNumber GROUP BY pl.productLine;
+
+mysql> select * from product_category_sales;
++------------------+-------------+------------------+
+| productLine      | total_sales | number_of_orders |
++------------------+-------------+------------------+
+| Classic Cars     |  3853922.49 |              209 |
+| Motorcycles      |  1121426.12 |               79 |
+| Planes           |   954637.54 |               66 |
+| Ships            |   663998.34 |               68 |
+| Trains           |   188532.92 |               47 |
+| Trucks and Buses |  1024113.57 |               75 |
+| Vintage Cars     |  1797559.63 |              187 |
++------------------+-------------+------------------+
+7 rows in set (0.11 sec)
+
+Q9. Stored Procedures in SQL with parameters
+
+a. Create a stored procedure Get_country_payments which takes in year and country as inputs and gives year wise, country wise total amount as an output. Format the total amount to nearest thousand unit (K)
+Tables: Customers, Payments
+
+ANSWER=
+
+DELIMITER //
+
+CREATE DEFINER=root@localhost PROCEDURE Get_country_payments (IN input_year INT, IN input_country VARCHAR(50))
+BEGIN
+    SELECT 
+        YEAR(p.paymentDate) AS payment_year, 
+        c.country,
+        CONCAT(FORMAT(SUM(p.amount) / 1000, 0), 'K') AS total_amount_k
+    FROM 
+        Payments AS p
+    JOIN 
+        Customers AS c ON p.customerNumber = c.customerNumber
+    WHERE 
+        YEAR(p.paymentDate) = input_year 
+        AND c.country = input_country
+    GROUP BY  
+        payment_year, 
+        c.country;
+END //
+
+DELIMITER ;
+
+mysql> CALL Get_country_payments(2003, 'France');
++--------------+---------+----------------+
+| payment_year | country | total_amount_k |
++--------------+---------+----------------+
+|         2003 | France  | 283K           |
++--------------+---------+----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+Q10. Window functions - Rank, dense_rank, lead and lag
+
+a) Using customers and orders tables, rank the customers based on their order frequency
+
+ANSWER=
+
+mysql> SELECT customername, order_count, RANK () OVER (ORDER BY order_count DESC) AS order_frequency_rank FROM (SELECT c.customernumber,c.customername, COUNT(o.ordernumber) AS order_count FROM customers as c LEFT JOIN orders as o ON c.customernumber = o.customernumber GROUP BY c.customernumber,c.customername) AS customer_order_counts;
++------------------------------------+-------------+----------------------+
+| customername                       | order_count | order_frequency_rank |
++------------------------------------+-------------+----------------------+
+| Euro+ Shopping Channel             |          26 |                    1 |
+| Mini Gifts Distributors Ltd.       |          17 |                    2 |
+| Australian Collectors, Co.         |           5 |                    3 |
+| Danish Wholesale Imports           |           5 |                    3 |
+| Dragon Souveniers, Ltd.            |           5 |                    3 |
+| Down Under Souveniers, Inc         |           5 |                    3 |
+| Reims Collectables                 |           5 |                    3 |
+| La Rochelle Gifts                  |           4 |                    8 |
+| Baane Mini Imports                 |           4 |                    8 |
+| Blauer See Auto, Co.               |           4 |                    8 |
+| Land of Toys Inc.                  |           4 |                    8 |
+| Volvo Model Replicas, Co           |           4 |                    8 |
+| Muscle Machine Inc                 |           4 |                    8 |
+| Diecast Classics Inc.              |           4 |                    8 |
+| Technics Stores Inc.               |           4 |                    8 |
+| Handji Gifts& Co                   |           4 |                    8 |
+| Anna's Decorations, Ltd            |           4 |                    8 |
+| Souveniers And Things Co.          |           4 |                    8 |
+| Corporate Gift Ideas Co.           |           4 |                    8 |
+| Royale Belge                       |           4 |                    8 |
+| Salzburg Collectables              |           4 |                    8 |
+| Tokyo Collectables, Ltd            |           4 |                    8 |
+| The Sharp Gifts Warehouse          |           4 |                    8 |
+| Kelly's Gift Shop                  |           4 |                    8 |
+| Atelier graphique                  |           3 |                   25 |
+| Signal Gift Stores                 |           3 |                   25 |
+| Mini Wheels Co.                    |           3 |                   25 |
+| Saveley & Henriot, Co.             |           3 |                   25 |
+| Herkku Gifts                       |           3 |                   25 |
+| La Corne D'abondance, Co.          |           3 |                   25 |
+| Gift Depot Inc.                    |           3 |                   25 |
+| Vitachrome Inc.                    |           3 |                   25 |
+| Toys of Finland, Co.               |           3 |                   25 |
+| AV Stores, Co.                     |           3 |                   25 |
+| Auto-Moto Classics Inc.            |           3 |                   25 |
+| UK Collectables, Ltd.              |           3 |                   25 |
+| Toys4GrownUps.com                  |           3 |                   25 |
+| Mini Caravy                        |           3 |                   25 |
+| Enaco Distributors                 |           3 |                   25 |
+| Québec Home Shopping Network       |           3 |                   25 |
+| Alpha Cognac                       |           3 |                   25 |
+| Lyon Souveniers                    |           3 |                   25 |
+| Rovelli Gifts                      |           3 |                   25 |
+| Oulu Toy Supplies, Inc.            |           3 |                   25 |
+| Petit Auto                         |           3 |                   25 |
+| Mini Creations Ltd.                |           3 |                   25 |
+| Stylish Desk Decors, Co.           |           3 |                   25 |
+| Tekni Collectables Inc.            |           3 |                   25 |
+| Australian Gift Network, Co        |           3 |                   25 |
+| Suominen Souveniers                |           3 |                   25 |
+| Marseille Mini Autos               |           3 |                   25 |
+| GiftsForHim.com                    |           3 |                   25 |
+| Gifts4AllAges.com                  |           3 |                   25 |
+| Online Diecast Creations Co.       |           3 |                   25 |
+| Collectables For Less Inc.         |           3 |                   25 |
+| Cruz & Sons Co.                    |           3 |                   25 |
+| L'ordine Souveniers                |           3 |                   25 |
+| Auto Canal+ Petit                  |           3 |                   25 |
+| Extreme Desk Decorations, Ltd      |           3 |                   25 |
+| Classic Legends Inc.               |           3 |                   25 |
+| Gift Ideas Corp.                   |           3 |                   25 |
+| Scandinavian Gift Ideas            |           3 |                   25 |
+| Mini Auto Werke                    |           3 |                   25 |
+| Corrida Auto Replicas, Ltd         |           3 |                   25 |
+| FunGiftIdeas.com                   |           3 |                   25 |
+| Australian Collectables, Ltd       |           3 |                   25 |
+| Motor Mint Distributors Inc.       |           3 |                   25 |
+| Daedalus Designs Imports           |           2 |                   68 |
+| Cambridge Collectables Co.         |           2 |                   68 |
+| Osaka Souveniers Co.               |           2 |                   68 |
+| Clover Collections, Co.            |           2 |                   68 |
+| Canadian Gift Exchange Network     |           2 |                   68 |
+| Online Mini Collectables           |           2 |                   68 |
+| King Kong Collectables, Co.        |           2 |                   68 |
+| Boards & Toys Co.                  |           2 |                   68 |
+| Heintze Collectables               |           2 |                   68 |
+| Collectable Mini Designs Co.       |           2 |                   68 |
+| giftsbymail.co.uk                  |           2 |                   68 |
+| Amica Models & Co.                 |           2 |                   68 |
+| Auto Associés & Cie.               |           2 |                   68 |
+| Toms Spezialitäten, Ltd            |           2 |                   68 |
+| Royal Canadian Collectables, Ltd.  |           2 |                   68 |
+| Marta's Replicas Co.               |           2 |                   68 |
+| Vida Sport, Ltd                    |           2 |                   68 |
+| Norway Gifts By Mail, Co.          |           2 |                   68 |
+| Mini Classics                      |           2 |                   68 |
+| Classic Gift Ideas, Inc            |           2 |                   68 |
+| CAF Imports                        |           2 |                   68 |
+| Men 'R' US Retailers, Ltd.         |           2 |                   68 |
+| Super Scale Inc.                   |           2 |                   68 |
+| Microscale Inc.                    |           2 |                   68 |
+| Frau da Collezione                 |           2 |                   68 |
+| West Coast Collectables Co.        |           2 |                   68 |
+| Iberia Gift Imports, Corp.         |           2 |                   68 |
+| Signal Collectibles Ltd.           |           2 |                   68 |
+| Double Decker Gift Stores, Ltd     |           2 |                   68 |
+| Diecast Collectables               |           2 |                   68 |
+| Bavarian Collectables Imports, Co. |           1 |                   98 |
+| Havel & Zbyszek Co                 |           0 |                   99 |
+| American Souvenirs Inc             |           0 |                   99 |
+| Porto Imports Co.                  |           0 |                   99 |
+| Asian Shopping Network, Co         |           0 |                   99 |
+| Natürlich Autos                    |           0 |                   99 |
+| ANG Resellers                      |           0 |                   99 |
+| Messner Shopping Network           |           0 |                   99 |
+| Franken Gifts, Co                  |           0 |                   99 |
+| BG&E Collectables                  |           0 |                   99 |
+| Schuyler Imports                   |           0 |                   99 |
+| Der Hund Imports                   |           0 |                   99 |
+| Cramer Spezialitäten, Ltd          |           0 |                   99 |
+| Asian Treasures, Inc.              |           0 |                   99 |
+| SAR Distributors, Co               |           0 |                   99 |
+| Kommission Auto                    |           0 |                   99 |
+| Lisboa Souveniers, Inc             |           0 |                   99 |
+| Precious Collectables              |           0 |                   99 |
+| Stuttgart Collectable Exchange     |           0 |                   99 |
+| Feuer Online Stores, Inc           |           0 |                   99 |
+| Warburg Exchange                   |           0 |                   99 |
+| Anton Designs, Ltd.                |           0 |                   99 |
+| Mit Vergnügen & Co.                |           0 |                   99 |
+| Kremlin Collectables, Co.          |           0 |                   99 |
+| Raanan Stores, Inc                 |           0 |                   99 |
++------------------------------------+-------------+----------------------+
+122 rows in set (0.00 sec)
+
+mysql>
+
+
+b)Calculate year wise, month name wise count of orders and year over year (YoY) percentage change. Format the YoY values in no decimals and show in % sign.
+Table: Orders
+
+ANSWERS=
+mysql> with orderswithmonthyear as (select ordernumber,Year(orderdate) as Order_year,
+monthname(orderdate) as order_month,
+     count(*)over(partition by year(orderdate),
+    month(orderdate)) AS total_orders From Orders),
+     yearlymonthlyordercount as ( select distinct Order_year,
+     order_month,
+     total_orders,
+     lag(total_orders) over( partition by order_month order by order_year) as previous_year_order_count from orderswithmonthyear)select order_year as Year,
+    order_month as month,
+    total_orders as Total_Orders,
+     case when previous_year_order_count is null then 'N/A'
+     else concat(format((total_orders - previous_year_order_count)*100.0/previous_year_order_count,0),'%')
+     end as YOY_Percentage_Change from yearlymonthlyordercount order by year,
+     month(STR_to_DATE(month,'%M'));
++------+-----------+--------------+-----------------------+
+| Year | month     | Total_Orders | YOY_Percentage_Change |
++------+-----------+--------------+-----------------------+
+| 2003 | April     |            7 | N/A                   |
+| 2003 | April     |            7 | 0%                    |
+| 2003 | March     |            6 | 0%                    |
+| 2003 | March     |            6 | N/A                   |
+| 2003 | May       |            6 | 0%                    |
+| 2003 | May       |            6 | N/A                   |
+| 2003 | August    |            5 | N/A                   |
+| 2003 | August    |            5 | 0%                    |
+| 2003 | January   |            5 | N/A                   |
+| 2003 | January   |            5 | 0%                    |
+| 2003 | December  |            9 | N/A                   |
+| 2003 | December  |            9 | 0%                    |
+| 2003 | July      |            7 | N/A                   |
+| 2003 | July      |            7 | 0%                    |
+| 2003 | February  |            3 | N/A                   |
+| 2003 | February  |            3 | 0%                    |
+| 2003 | June      |            7 | 0%                    |
+| 2003 | June      |            7 | N/A                   |
+| 2003 | October   |           18 | N/A                   |
+| 2003 | November  |           30 | N/A                   |
+| 2003 | November  |           30 | 0%                    |
+| 2003 | October   |           18 | 0%                    |
+| 2003 | September |            8 | N/A                   |
+| 2003 | September |            8 | 0%                    |
+| 2004 | February  |           11 | 267%                  |
+| 2004 | February  |           11 | 0%                    |
+| 2004 | January   |            8 | 60%                   |
+| 2004 | January   |            8 | 0%                    |
+| 2004 | July      |           11 | 57%                   |
+| 2004 | July      |           11 | 0%                    |
+| 2004 | June      |           12 | 71%                   |
+| 2004 | June      |           12 | 0%                    |
+| 2004 | March     |            8 | 33%                   |
+| 2004 | March     |            8 | 0%                    |
+| 2004 | May       |            8 | 33%                   |
+| 2004 | April     |           10 | 43%                   |
+| 2004 | April     |           10 | 0%                    |
+| 2004 | August    |           12 | 140%                  |
+| 2004 | November  |           33 | 10%                   |
+| 2004 | November  |           33 | 0%                    |
+| 2004 | May       |            8 | 0%                    |
+| 2004 | August    |           12 | 0%                    |
+| 2004 | October   |           13 | -28%                  |
+| 2004 | October   |           13 | 0%                    |
+| 2004 | December  |           13 | 44%                   |
+| 2004 | December  |           13 | 0%                    |
+| 2004 | September |           12 | 50%                   |
+| 2004 | September |           12 | 0%                    |
+| 2005 | March     |           13 | 63%                   |
+| 2005 | March     |           13 | 0%                    |
+| 2005 | April     |           12 | 0%                    |
+| 2005 | April     |           12 | 20%                   |
+| 2005 | February  |           12 | 0%                    |
+| 2005 | February  |           12 | 9%                    |
+| 2005 | May       |           15 | 88%                   |
+| 2005 | May       |           15 | 0%                    |
+| 2005 | January   |           12 | 0%                    |
+| 2005 | January   |           12 | 50%                   |
++------+-----------+--------------+-----------------------+
+58 rows in set, 58 warnings (0.00 sec)
+
+
+Q11.Subqueries and their applications
+
+a. Find out how many product lines are there for which the buy price value is greater than the average of buy price value. Show the output as product line and its count.
+
+ANSWER=
+
+mysql> use classocmodels;
+Database changed
+mysql> SELECT productline, COUNT(*) AS total FROM products    WHERE buyprice > (SELECT AVG (buyprice) FROM products) GROUP BY productline;
++------------------+-------+
+| productline      | total |
++------------------+-------+
+| Classic Cars     |    24 |
+| Motorcycles      |     6 |
+| Trucks and Buses |     7 |
+| Vintage Cars     |    10 |
+| Planes           |     5 |
+| Trains           |     1 |
+| Ships            |     1 |
++------------------+-------+
+7 rows in set (0.08 sec)
+
+Q12. ERROR HANDLING in SQL
+      Create the table Emp_EH. Below are its fields.
+●	EmpID (Primary Key)
+●	EmpName
+●	EmailAddress
+Create a procedure to accept the values for the columns in Emp_EH. Handle the error using exception handling concept. Show the message as “Error occurred” in case of anything wrong.
+
+ANSWER=
+
+CREATE TABLE Emp_EH (
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(100),
+    EmailAddress VARCHAR(100));
+
+CREATE DEFINER=root@localhost PROCEDURE InsertIntoEmp_EH (
+    IN p_EmpName VARCHAR(100), 
+    IN p_EmailAddress VARCHAR(100))
+    BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+    ROLLBACK;
+    SELECT 'Error occurred' AS ErrorMessage;
+    END;
+
+    START TRANSACTION;
+    INSERT INTO Emp_EH (EmpName, EmailAddress)
+    VALUES (p_EmpName, p_EmailAddress);
+    COMMIT;
+END //
+
+DELIMITER ;
+
+Q13. TRIGGERS
+Create the table Emp_BIT. Add below fields in it.
+●	Name
+●	Occupation
+●	Working_date
+●	Working_hours
+
+Insert the data as shown in below query.
+INSERT INTO Emp_BIT VALUES
+('Robin', 'Scientist', '2020-10-04', 12),  
+('Warner', 'Engineer', '2020-10-04', 10),  
+('Peter', 'Actor', '2020-10-04', 13),  
+('Marco', 'Doctor', '2020-10-04', 14),  
+('Brayden', 'Teacher', '2020-10-04', 12),  
+('Antonio', 'Business', '2020-10-04', 11);  
+ 
+Create before insert trigger to make sure any new value of Working_hours, if it is negative, then it should be inserted as positive.
+
+ANSWER-
+
+CREATE TABLE Emp_BIT (
+Name VARCHAR(100), 
+Occupation VARCHAR(100), 
+Working_date DATE, 
+Working_hours INT);
+
+INSERT INTO Emp_BIT (Name, Occupation, Working_date, Working_hours) VALUES
+('Robin', 'Scientist', '2020-10-04', 12), 
+('Warner', 'Engineer', '2020-10-04', 10),  
+('Peter', 'Actor', '2020-10-04', 13), 
+('Marco', 'Doctor', '2020-10-04', 14),  
+('Brayden', 'Teacher', '2020-10-04', 12), 
+('Antonio', 'Business', '2020-10-04', 11);
+DELIMITER //
+CREATE DEFINER = CURRENT_USER TRIGGER classocmodels.emp_bit_BEFORE_INSERT 
+BEFORE INSERT ON emp_bit 
+FOR EACH ROW
+BEGIN
+    IF NEW.Working_hours < 0 THEN 
+        SET NEW.Working_hours = ABS(NEW.Working_hours); 
+         END IF;
+END //
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
